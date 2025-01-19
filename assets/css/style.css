@@ -269,8 +269,4 @@ canvas {
     margin-top: 10px;
 }
 
-.navbar-light .navbar-toggler-icon {
-    filter: invert(1);
-}
-
 }
