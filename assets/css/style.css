@@ -37,11 +37,11 @@ body {
 }
 
 .base-layer {
-    background-image: url('/assets/pic/bit1.webp'); /* תמונת רקע ראשית למסכים גדולים */
+    background-image: url('assets/pic/bit1.webp'); /* תמונת רקע ראשית למסכים גדולים */
 }
 
 .depth-layer {
-    background-image: url('/assets/pic/coins-background.png'); /* תמונת רקע משנית למסכים גדולים */
+    background-image: url('assets/pic/coins-background.png'); /* תמונת רקע משנית למסכים גדולים */
 }
 
 
