@@ -20,29 +20,27 @@ body {
 }
 
 #scene {
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
+    width: 100%; /* ניתן לשנות בהתאם לרוחב הרצוי */
+    height: 100vh; /* ניתן לשנות בהתאם לגובה הרצוי */
+    overflow: hidden; /* מונע גלילה נוספת מחוץ לאלמנט */
+    position: relative; /* הגדרת האלמנט כיחסי לשימוש בפוזיציונינג בתוכו */
 }
 
 .layer {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: absolute; /* מאפשר חפיפה של השכבות */
+    top: 0;
+    left: 0;
 }
 
-.base-layer {
-    background-image: url('/assets/pic/bit1.webp'); /* תמונת רקע ראשית למסכים גדולים */
+.layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* מבטיח שהתמונה מרוחה על כל האלמנט תוך שמירה על יחסי הגודל */
+    object-position: center; /* ממרכזת את התמונה באלמנט */
 }
 
-.depth-layer {
-    background-image: url('/assets/pic/coins-background.png'); /* תמונת רקע משנית למסכים גדולים */
-}
 
 
 #coins-container {
@@ -191,6 +189,7 @@ canvas {
     color: #975d00; /* שינוי צבע בעת ריחוף */
 } 
 
+
 /* עיצוב המטבע */
 .coin-icon {
     width: 55px; 
@@ -238,69 +237,15 @@ canvas {
 }
 
 
-/* אנימציה לסיבוב */
-@keyframes spin {
-    from {
-        transform: rotateY(0deg);
-    }
-    to {
-        transform: rotateY(360deg);
-    }
-}
-
 /* Responsive styles */
 @media (max-width: 768px) {
-    .parallax {
-        height: 50vh;
-    }
 
-    h1 {
-        font-size: 24px;
-    }
-
-    #coins-container {
-        max-height: 300px; 
-    }
-    
-}
-.layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    transition: transform 0.3s ease-out;
+#scene {
+    height: 30vh; 
 }
 
-/* שינויים למסכים רחבים */
-@media (min-width: 768px) {
-
-}
-
-/* שינויים למסכים צרים - מובייל */
-@media (max-width: 767px) {
-    .base-layer {
-        background-image: url('/assets/pic/imageForMobile.jpg');
-        transform: translateY(-5%);
-    }
-    .depth-layer {
-        background-image: url('path/to/your/depth-image.png');
-        transform: translateY(-20%);
-    }
-}
-
-
-@keyframes fall {
-    from {
-      transform: translateY(-100%); /* התחלה ממינוס 100% מהגובה, מה שאומר מחוץ למסך מלמעלה */
-    }
-    to {
-      transform: translateY(100%); /* תנועה עד ל-100% מהגובה, מה שאומר עד לסוף המסך מלמטה */
-    }
+.layer img {
+    object-position: 50% 50%; /* ממרכז את התמונה יותר כדי להתאים לרוחב הנמוך */
 }
 
 .crypto-chart-container {
@@ -324,6 +269,8 @@ canvas {
     margin-top: 10px;
 }
 
-.chart-controls select {
-    width: 30%;
+.navbar-light .navbar-toggler-icon {
+    filter: invert(1);
+}
+
 }

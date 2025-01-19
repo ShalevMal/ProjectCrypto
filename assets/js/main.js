@@ -331,3 +331,15 @@ window.addEventListener('click', (event) => {
         closeGameModal();
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const toggler = document.querySelector('.navbar-toggler');
+    const logo = document.querySelector('.navbar-brand');
+    const coin = document.querySelector('#coin-button');
+
+    toggler.addEventListener('click', function() {
+        const isExpanded = toggler.getAttribute('aria-expanded') === 'true';
+        logo.style.display = isExpanded ? 'none' : 'block';
+        coin.style.display = isExpanded ? 'none' : 'block';
+    });
+});
