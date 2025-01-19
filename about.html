@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <nav id="navbar" class="navbar navbar-expand-lg sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- כפתורי ניווט בצד שמאל -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li><a class="nav-link" href="index.html" id="index">Home</a></li>
+                    <li><a class="nav-link" href="live-reports.html" id="live-reports">Live Reports</a></li>
+                    <li><a class="nav-link active" href="about.html" id="about">About</a></li>
+                </ul>
+            </div>
+    
+            <!-- לוגו במרכז (אך מסודר כחלק מה-flow של flexbox) -->
+            <a class="navbar-brand mx-auto" href="index.html">
+                <img src="assets/pic/logo.png" alt="Logo" style="height: 70px;"> <!-- ניתן לשנות את הגודל לפי הצורך -->
+            </a>
+    
+            <!-- המטבע בצד ימין -->
+            <a class="nav-link" id="coin-button">
+                <img src="assets/pic/coin.png" alt="Game Coin" class="coin-icon">
+            </a>
+        </div>
+    </nav>
+
+    <div id="scene">
+        <div class="layer base-layer"></div>
+        <div class="layer depth-layer"></div>
+    </div>
+
+    <main class="container my-4">
+        <h2>About</h2>
+        <p>This project was created to showcase cryptocurrency data using public APIs and provide live reports of selected coins.</p>
+    </main>
+
+    <footer class="text-center py-4">
+        <p>&copy; 2025 Crypto Dashboard</p>
+    </footer>
+</body>
+</html>

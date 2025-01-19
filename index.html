@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/highcharts.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+
+    <nav id="navbar" class="navbar navbar-expand-lg sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- כפתורי ניווט בצד שמאל -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li><a class="nav-link active" href="index.html" id="index">Home</a></li>
+                    <li><a class="nav-link" href="live-reports.html" id="live-reports">Live Reports</a></li>
+                    <li><a class="nav-link" href="about.html" id="about">About</a></li>
+                </ul>
+            </div>
+    
+            <!-- לוגו במרכז (אך מסודר כחלק מה-flow של flexbox) -->
+            <a class="navbar-brand mx-auto" href="index.html">
+                <img src="assets/pic/logo.png" alt="Logo" style="height: 70px;"> <!-- ניתן לשנות את הגודל לפי הצורך -->
+            </a>
+    
+            <!-- המטבע בצד ימין -->
+            <a class="nav-link" id="coin-button" href="#" onclick="openGameModal()">
+                <img src="assets/pic/coin.png" alt="Game Coin" class="coin-icon">
+            </a>
+        </div>
+    </nav>
+
+    <div id="game-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeGameModal()">&times;</span>
+            <iframe id="game-frame" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div id="scene">
+        <div class="layer base-layer"></div>
+        <div class="layer depth-layer"></div>
+    </div>
+
+
+    <div class="search-bar mb-4">
+        <input type="text" id="coin-search" class="form-control" placeholder="Search for a coin...">
+    </div>
+
+
+    <main class="container mt-5">
+        <div class="d-flex justify-content-center mb-4">
+            <nav>
+                <ul class="pagination" id="top-pagination">
+                    <li class="page-item"><button class="page-link" data-page="1">1</button></li>
+                    <li class="page-item"><button class="page-link" data-page="2">2</button></li>
+                    <li class="page-item"><button class="page-link" data-page="3">3</button></li>
+                    <li class="page-item"><button class="page-link" data-page="4">4</button></li>
+                </ul>
+            </nav>
+        </div>
+
+        
+        <div id="coins-container" class="row">
+            <!-- Coins will be dynamically loaded here -->
+        </div>
+    </main>
+
+    <!-- Modal for coin selection management -->
+    <div class="modal fade" id="selection-modal" tabindex="-1" aria-labelledby="selectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selectionModalLabel">Manage Selected Coins</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Selected coins will be appended here dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4">
+        <p>&copy; 2025 Crypto Dashboard</p>
+    </footer>
+</body>
+</html>
