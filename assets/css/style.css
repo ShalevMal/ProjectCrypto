@@ -46,28 +46,13 @@ body {
 #coins-container {
     max-height: 500px; /* גובה מקסימלי של הקונטיינר */
     overflow-y: auto; /* הפעלת גלילה אנכית */
-    padding-right: 20px; /* ריווח כדי למנוע חיתוך */
     border: 1px solid #cccccc4e; /* מסגרת אופציונלית */
     background-color: #f9f9f9; /* צבע רקע אופציונלי */ 
 }
 
-
-
-.card {
-    transition: transform 0.3s ease-in-out;
-    align-items: center;
-    margin: 10px;
-}
-
-.card img {
-    max-width: 100%;
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
-}
-
-.card-content {
-    padding: 15px;
-    text-align: center;
+.card-body {
+    width: 100%;
+    justify-items: center;
 }
 
 .card:hover {
@@ -197,6 +182,26 @@ canvas {
     animation: spin 6s linear infinite; 
 }
 
+/* זמני - לחפש פיתרון אחר*/
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,215,0,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* צבע זהב לאייקון */
+}
+
+
+
+@keyframes spinOutward {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.coin-icon {
+    animation: spinOutward 6s linear infinite;
+}
+
 
 /*  עיצוב החלונית למשחק*/
 .modal {
@@ -236,36 +241,32 @@ canvas {
     cursor: pointer;
 }
 
+.card-body {
+    width: 100%;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #41310a61;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #25210586;
+}
 
 /* Responsive styles */
 @media (max-width: 768px) {
 
-#scene {
-    height: 30vh; 
-}
+    .layer img {
+        object-fit: none;
+    }
 
-.layer img {
-    object-position: 50% 50%; /* ממרכז את התמונה יותר כדי להתאים לרוחב הנמוך */
-}
-
-.crypto-chart-container {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.crypto-info {
-    margin-bottom: 10px;
-}
-
-.tradingview-chart {
-    height: 300px;
-    width: 100%;
-}
-
-.chart-controls {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-}
-}
+    /* #scene {
+        height: 30vh; 
+    } */
+    }
