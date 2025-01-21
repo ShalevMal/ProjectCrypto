@@ -41,13 +41,16 @@ body {
     object-position: center; /* ממרכזת את התמונה באלמנט */
 }
 
-
+.modal-body p {
+    display: flex;
+    justify-content: space-between;
+}
 
 #coins-container {
-    max-height: 500px; /* גובה מקסימלי של הקונטיינר */
-    overflow-y: auto; /* הפעלת גלילה אנכית */
-    border: 1px solid #cccccc4e; /* מסגרת אופציונלית */
-    background-color: #f9f9f9; /* צבע רקע אופציונלי */ 
+    max-height: 500px; 
+    overflow-y: auto; 
+    border: 1px solid #cccccc4e; 
+    background-color: #f9f9f9; 
 }
 
 .card-body {
@@ -87,7 +90,7 @@ body {
 
 /* עיצוב הכפתורים */
 .btn-secondary, .btn-primary {
-    padding: 6px 12px;
+    /* padding: 6px 12px; */
     border: none;
     color: white;
     font-weight: bold;
@@ -96,17 +99,15 @@ body {
 }
 
 .btn-secondary {
-    background-color: #8a8361; /* צבע אפור לכפתור ביטול */
-    height: 50px;
-    font-size: 15px;
-
-
+    background-color: #37210cb5; /* צבע אפור לכפתור ביטול */
+    height: 45px;
+    font-size: 12px;
 }
 
 .btn-primary {
     background-color: #010100d3;
-    height: 50px; 
-    font-size: 15px;
+    height: 45px; 
+    font-size: 12px;
 }
 
 .page-link {

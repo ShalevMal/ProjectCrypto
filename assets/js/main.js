@@ -25,7 +25,7 @@ $(document).ready(function () {
         initializeLiveReportsPage();
     }
 
-        // Scroll Parallax
+         //** */ Scroll Parallax //* **/
         window.addEventListener('scroll', function() {
             var scrollPosition = window.pageYOffset;
             var baseLayer = document.querySelector('.base-layer'); // התמונה הראשונה
@@ -40,7 +40,7 @@ $(document).ready(function () {
         
         
 
-    /** MAIN PAGE FUNCTIONS **/
+        //** */ MAIN PAGE FUNCTIONS/* **/
     function initializeMainPage() {
         function fetchCoins() {
             axios.get(coinsURL)
@@ -54,13 +54,13 @@ $(document).ready(function () {
                 });
         }
         
-// more info - coin
+        //* */ MORE INFO COINS /* *//
 async function fetchCoinDetails(coinId) {
     const currentCurrency = $("#currency-toggle").text().toLowerCase(); // קבלת המטבע הנוכחי
     const coinInfoContainer = $(`#info-${coinId}`);
     coinInfoContainer.html(`
         <div class="text-center">
-            <img src="assets/pic/loading.webp" alt="Loading..." style="width: 180px; height: 50px;">
+            <img src="assets/pic/crypto-loading.png" alt="Loading..." style="width: 180px; height: 120px;">
         </div>
     `).slideDown();
 
@@ -92,6 +92,26 @@ function renderCoinDetails(coinId, data, currency) {
         </div>
     `).slideDown();
 }
+
+        function attachEventListeners() {
+            $(".info-btn").on("click", function () {
+                const coinId = $(this).data("id");
+                const coinInfoContainer = $(`#info-${coinId}`);
+
+                if (coinInfoContainer.is(":visible")) {
+                    coinInfoContainer.slideUp();
+                } else {
+                    fetchCoinDetails(coinId);
+                }
+            });
+
+            $(".select-btn").on("change", function () {
+                const coinId = $(this).data("id");
+                const coinName = $(this).data("name");
+                const coinSymbol = $(this).data("symbol");
+                toggleCoinSelection({ id: coinId, name: coinName, symbol: coinSymbol }, $(this));
+            });
+        }
         
 
         function renderCoins() {
@@ -148,26 +168,7 @@ function renderCoinDetails(coinId, data, currency) {
         }
         
 
-        function attachEventListeners() {
-            $(".info-btn").on("click", function () {
-                const coinId = $(this).data("id");
-                const coinInfoContainer = $(`#info-${coinId}`);
-
-                if (coinInfoContainer.is(":visible")) {
-                    coinInfoContainer.slideUp();
-                } else {
-                    fetchCoinDetails(coinId);
-                }
-            });
-
-            $(".select-btn").on("change", function () {
-                const coinId = $(this).data("id");
-                const coinName = $(this).data("name");
-                const coinSymbol = $(this).data("symbol");
-                toggleCoinSelection({ id: coinId, name: coinName, symbol: coinSymbol }, $(this));
-            });
-        }
-
+        // modal 5 coins //
         function toggleCoinSelection(coin, checkbox) {
             const existingIndex = selectedCoins.findIndex((c) => c.id === coin.id);
             if (existingIndex !== -1) {
@@ -188,7 +189,12 @@ function renderCoinDetails(coinId, data, currency) {
         }
 
         function showSelectionModal(newCoin) {
-            $("#selection-modal").modal("show");
+            const modalElement = document.getElementById('selection-modal');
+            const bsModal = new bootstrap.Modal(modalElement, {
+                backdrop: 'static',  // מונע סגירה על ידי לחיצה מחוץ למודול
+            });
+            bsModal.show();
+        
             const modalBody = $("#modal-body");
             modalBody.empty();
 
@@ -311,7 +317,7 @@ function openGameModal() {
     const modal = document.getElementById('game-modal');
     const iframe = document.getElementById('game-frame');
 
-    // כתובת המשחק
+    // ADDRESS GAME //
     iframe.src = "https://lagged.com/en/g/dino-dash#goog_game_inter"; // הכנס את הכתובת האמיתית כאן
     modal.style.display = "flex"; // הצגת החלונית
 }
@@ -320,8 +326,8 @@ function closeGameModal() {
     const modal = document.getElementById('game-modal');
     const iframe = document.getElementById('game-frame');
 
-    modal.style.display = "none"; // הסתרת החלונית
-    iframe.src = ""; // איפוס הכתובת
+    modal.style.display = "none"; 
+    iframe.src = ""; 
 }
 
 // סגירת החלונית בלחיצה מחוץ לחלונית
@@ -332,6 +338,8 @@ window.addEventListener('click', (event) => {
     }
 });
 
+
+// FIX NAVBAR FOR MOBILE //  
 document.addEventListener("DOMContentLoaded", function() {
     const toggler = document.querySelector('.navbar-toggler');
     const logo = document.querySelector('.navbar-brand');
