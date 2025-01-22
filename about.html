@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +11,14 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <script defer src="assets/js/main.js"></script>
 </head>
-<body>
-</head>
-<body>
 
+<body id="about-page">
     <nav id="navbar" class="navbar navbar-expand-lg sticky-top">
         <div class="container d-flex justify-content-between align-items-center">
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- כפתורי ניווט בצד שמאל -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li><a class="nav-link" href="index.html" id="index">Home</a></li>
@@ -28,13 +26,9 @@
                     <li><a class="nav-link active" href="about.html" id="about">About</a></li>
                 </ul>
             </div>
-    
-            <!-- לוגו במרכז (אך מסודר כחלק מה-flow של flexbox) -->
             <a class="navbar-brand mx-auto" href="index.html">
-                <img src="assets/pic/logo.png" alt="Logo" style="height: 70px;"> <!-- ניתן לשנות את הגודל לפי הצורך -->
+                <img src="assets/pic/logo.png" alt="Logo" style="height: 70px;">
             </a>
-    
-            <!-- המטבע בצד ימין -->
             <a class="nav-link" id="coin-button">
                 <img src="assets/pic/coin.png" alt="Game Coin" class="coin-icon">
             </a>
@@ -43,16 +37,87 @@
 
     <div id="scene">
         <div class="layer base-layer"><img src="assets/pic/bit1.webp" alt=""></div>
-        <div class="layer depth-layer"><img src="assets/pic/coins-background.png" alt=""></div>
+        <div class="layer depth-layer"><img src="assets/pic/coins-background2.png" alt=""></div>
     </div>
 
-    <main class="container my-4">
-        <h2>About</h2>
-        <p>This project was created to showcase cryptocurrency data using public APIs and provide live reports of selected coins.</p>
+    <header class="text-center py-5">
+        <h1>About This Project</h1>
+        <p>
+            Welcome to a platform dedicated to exploring the fascinating world of cryptocurrency.<br>
+            This project combines innovation, technology, and a passion for data-driven solutions to empower users with
+            the tools they need.
+        </p>
+    </header>
+
+    <section class="section">
+        <h2 class="text-center">What This Project is About</h2>
+        <div class="container">
+            <p>
+                This platform was built to provide an intuitive and accessible way to monitor, analyze, and report on
+                the
+                latest cryptocurrency trends.<br>
+                It is designed for enthusiasts, traders, and anyone curious about thedigital currency market.
+            </p>
+            <ul>
+                <li><strong>Live Market Data:</strong> Real-time updates on prices, trends, and market movements.</li>
+                <li><strong>User-Friendly Interface:</strong> A clean and responsive design for seamless navigation.
+                </li>
+                <li><strong>Interactive Reports:</strong> Tools to create personalized reports and track your favorite
+                    cryptocurrencies.</li>
+                <li><strong>Passion for Innovation:</strong> This project reflects my commitment to using technology to
+                    simplify
+                    complex systems and make data accessible for everyone.</li>
+            </ul>
+        </div>
+    </section>
+
+    <hr>
+
+    <main>
+        <section class="section">
+            <h2 class="text-center">Meet the Creator</h2>
+            <div class="container text-center">
+                <div class="team-member">
+                    <img src="assets/pic/me.jpg" alt="Creator">
+                    <h3>Shalev</h3>
+                    <p>Full Stack Developer and cryptocurrency enthusiast with a passion for turning ideas into
+                        functional solutions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta">
+            <button>Request Consultation</button>
+        </section>
+        <!-- Modal Structure -->
+        <div class="modal consultation-modal" id="consultation-modal">
+            <div class="modal-content">
+                <h2>Request Consultation</h2>
+                <form id="consultationForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="close-modal">Cancel</button>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 
     <footer class="text-center py-4">
-        <p>&copy; 2025, All rights reserved. </p>
+        <p>&copy; 2025, All rights reserved.</p>
     </footer>
 </body>
 </html>

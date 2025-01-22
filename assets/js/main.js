@@ -32,7 +32,7 @@ $(document).ready(function () {
             var depthLayer = document.querySelector('.depth-layer'); // התמונה השניה
         
             var baseOffset = (scrollPosition * 0.1) % window.innerHeight; // תזוזה איטית יותר לתמונה הראשונה
-            var depthOffset = (scrollPosition * 0.2) % window.innerHeight; // תזוזה מהירה יותר לתמונה השניה
+            var depthOffset = (scrollPosition * 0.3) % window.innerHeight; // תזוזה מהירה יותר לתמונה השניה
         
             baseLayer.style.transform = `translateY(${baseOffset}px)`;
             depthLayer.style.transform = `translateY(${depthOffset}px)`;
@@ -350,4 +350,26 @@ document.addEventListener("DOMContentLoaded", function() {
         logo.style.display = isExpanded ? 'none' : 'block';
         coin.style.display = isExpanded ? 'none' : 'block';
     });
+});
+
+
+// CONTANT FOR ABOUT HTML //
+// פתיחת חלונית ה-Consultation
+document.querySelector('.cta button').addEventListener('click', () => {
+    document.getElementById('consultation-modal').style.display = 'flex';
+});
+
+// סגירת החלונית בלחיצה על Cancel
+document.querySelector('.close-modal').addEventListener('click', () => {
+    document.getElementById('consultationForm').reset(); // ניקוי שדות הטופס
+    document.getElementById('consultation-modal').style.display = 'none'; // סגירת החלונית
+});
+
+
+
+document.getElementById('consultationForm').addEventListener('submit', (e) => {
+    e.preventDefault(); 
+    alert('Form submitted successfully!');
+    e.target.reset();
+    document.getElementById('consultation-modal').style.display = 'none';
 });

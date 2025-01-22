@@ -1,5 +1,7 @@
 html {
     scroll-behavior: smooth;
+    text-align: center; 
+
 }
 
 body {
@@ -7,7 +9,8 @@ body {
 
 }
 
-#scene .base-layer, #scene .depth-layer {
+#scene .base-layer,
+#scene .depth-layer {
     position: absolute;
     top: 0;
     left: 0;
@@ -20,16 +23,21 @@ body {
 }
 
 #scene {
-    width: 100%; /* ניתן לשנות בהתאם לרוחב הרצוי */
-    height: 100vh; /* ניתן לשנות בהתאם לגובה הרצוי */
-    overflow: hidden; /* מונע גלילה נוספת מחוץ לאלמנט */
-    position: relative; /* הגדרת האלמנט כיחסי לשימוש בפוזיציונינג בתוכו */
+    width: 100%;
+    /* ניתן לשנות בהתאם לרוחב הרצוי */
+    height: 100vh;
+    /* ניתן לשנות בהתאם לגובה הרצוי */
+    overflow: hidden;
+    /* מונע גלילה נוספת מחוץ לאלמנט */
+    position: relative;
+    /* הגדרת האלמנט כיחסי לשימוש בפוזיציונינג בתוכו */
 }
 
 .layer {
     width: 100%;
     height: 100%;
-    position: absolute; /* מאפשר חפיפה של השכבות */
+    position: absolute;
+    /* מאפשר חפיפה של השכבות */
     top: 0;
     left: 0;
 }
@@ -37,8 +45,10 @@ body {
 .layer img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* מבטיח שהתמונה מרוחה על כל האלמנט תוך שמירה על יחסי הגודל */
-    object-position: center; /* ממרכזת את התמונה באלמנט */
+    object-fit: cover;
+    /* מבטיח שהתמונה מרוחה על כל האלמנט תוך שמירה על יחסי הגודל */
+    object-position: center;
+    /* ממרכזת את התמונה באלמנט */
 }
 
 .modal-body p {
@@ -47,10 +57,10 @@ body {
 }
 
 #coins-container {
-    max-height: 500px; 
-    overflow-y: auto; 
-    border: 1px solid #cccccc4e; 
-    background-color: #f9f9f9; 
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #cccccc4e;
+    background-color: #f9f9f9;
 }
 
 .card-body {
@@ -63,78 +73,82 @@ body {
 }
 
 #info-container img {
-    background: none; /* מבטל רקע */
+    background: none;
+    /* מבטל רקע */
     display: block;
-    margin: 0 auto; /* מרכז את התמונה */
-    border: none; /* מבטל מסגרת */
+    margin: 0 auto;
+    /* מרכז את התמונה */
+    border: none;
+    /* מבטל מסגרת */
     border-radius: 50%;
 }
 
 /* עיצוב השורת חיפוש והכפתורים */
 .search-bar {
     display: flex;
-    justify-content: space-between; /* מרווח בין האלמנטים לאורך השורה */
-    align-items: center; /* מיישר את האלמנטים לאותו גובה */
+    justify-content: space-between;
+    /* מרווח בין האלמנטים לאורך השורה */
+    align-items: center;
+    /* מיישר את האלמנטים לאותו גובה */
     padding: 10px;
-    background-color: #f8f9fa; /* רקע בהיר לשורת חיפוש */
-    border-radius: 8px; /* גבולות מעוגלים */
+    background-color: #f8f9fa;
+    /* רקע בהיר לשורת חיפוש */
+    border-radius: 8px;
+    /* גבולות מעוגלים */
 }
 
 #coin-search {
-    flex-grow: 1; /* מאפשר לתיבת החיפוש לגדול ולהתאים לרוחב הזמין */
-    margin-right: 10px; /* מרווח בין תיבת החיפוש לכפתורים */
+    flex-grow: 1;
+    /* מאפשר לתיבת החיפוש לגדול ולהתאים לרוחב הזמין */
+    margin-right: 10px;
+    /* מרווח בין תיבת החיפוש לכפתורים */
     padding: 8px 16px;
     border: 2px solid #ced4da;
     border-radius: 8px;
 }
 
 /* עיצוב הכפתורים */
-.btn-secondary, .btn-primary {
-    /* padding: 6px 12px; */
+.btn-secondary,
+.btn-primary {
     border: none;
     color: white;
     font-weight: bold;
     cursor: pointer;
-    border-radius: 8px; /* גבולות מעוגלים לכפתורים */
+    border-radius: 8px;
 }
 
 .btn-secondary {
-    background-color: #37210cb5; /* צבע אפור לכפתור ביטול */
+    background-color: #37210cb5;
+    /* צבע אפור לכפתור ביטול */
     height: 45px;
     font-size: 12px;
 }
 
 .btn-primary {
     background-color: #010100d3;
-    height: 45px; 
+    height: 45px;
     font-size: 12px;
 }
 
 .page-link {
-color: black;
+    color: black;
 }
 
-.active>.page-link, .page-link.active {
+.active>.page-link,
+.page-link.active {
     z-index: 3;
     color: var(--bs-pagination-active-color);
     background-color: rgb(81, 4, 4);
     border-color: rgba(50, 38, 38, 0.625);
-} 
+}
 
-/* שינוי צבע כפתורים במעבר עכבר */
 .btn-secondary:hover {
-    background-color: #9a9572; 
-} 
-
-.btn-primary:hover {
-    background-color: #27303bdc;
+    background-color: #343027c2; 
 }
 
 .form-check-input:checked {
     background-color: #0f830ffc;
-    border-color: #1d8a07;
 }
-/* _______________________ */
 
 canvas {
     margin: 0 auto;
@@ -145,8 +159,8 @@ canvas {
 }
 
 #navbar {
-    background-color: rgba(0, 0, 0, 0.896); 
-    padding: 2px; 
+    background-color: rgba(0, 0, 0, 0.896);
+    padding: 2px;
 
 }
 
@@ -166,26 +180,24 @@ canvas {
 }
 
 .navbar-nav .nav-link {
-    font-size: 16px; 
+    font-size: 16px;
     color: #fff;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #975d00; /* שינוי צבע בעת ריחוף */
-} 
-
-
-/* עיצוב המטבע */
-.coin-icon {
-    width: 55px; 
-    height: 50px; 
-    animation: spin 6s linear infinite; 
+    color: #975d00;
 }
 
-/* זמני - לחפש פיתרון אחר*/
+
+.coin-icon {
+    width: 55px;
+    height: 50px;
+    animation: spin 6s linear infinite;
+}
+
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,215,0,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* צבע זהב לאייקון */
+    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,215,0,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 
@@ -194,6 +206,7 @@ canvas {
     from {
         transform: rotateY(0deg);
     }
+
     to {
         transform: rotateY(360deg);
     }
@@ -206,32 +219,19 @@ canvas {
 
 /*  עיצוב החלונית למשחק*/
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-    /* z-index: 1000; */
 }
 
 .modal-content {
-    position: relative;
-    width: 80%;
     max-width: 600px;
-    background-color: white;
-    border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content iframe {
-    width: 100%;
     height: 400px;
-    border: none;
 }
 
 .close {
@@ -242,9 +242,9 @@ canvas {
     cursor: pointer;
 }
 
-.card-body {
+/* .card-body {
     width: 100%;
-}
+} */
 
 /* scrollbar */
 ::-webkit-scrollbar {
@@ -260,14 +260,122 @@ canvas {
     background: #25210586;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
 
-    .layer img {
-        object-fit: none;
-    }
+/* STYLE FOR ABOUT PAGE */
+#about-page {
+    background-color: #121212;
+    color: #cac3b0;
+    text-align: center; 
 
-    /* #scene {
-        height: 30vh; 
-    } */
-    }
+}
+
+#about-page header {
+    text-align: center;
+    background: linear-gradient(135deg, #1f1f1f, #282828);
+}
+
+#about-page .section {
+    padding: 60px 20px;
+}
+
+
+#about-page .team-member img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 30px;
+}
+
+#about-page .cta button {
+    background-color: #ed811536;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#about-page .cta button:hover {
+    background-color: #edb0156a;
+}
+
+/* מילוי פרטי משתמש */
+
+/* עיצוב כללי לחלונית */
+.consultation-modal .modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+/* עיצוב כללי לכפתורים */
+.consultation-modal .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.consultation-modal .modal-actions button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.consultation-modal .modal-actions button[type="cancel"] {
+    background-color: #32281c;
+    color: white;
+    flex: 1;
+}
+
+.consultation-modal .modal-actions button[type="submit"] {
+    background-color: #32281c;
+    color: white;
+    flex: 1;
+}
+
+.consultation-modal .modal-actions button[type="submit"]:hover {
+    background-color: #32281cdc;
+}
+
+.close-modal {
+    background-color: #d1cdcd83; 
+    color: #333; 
+}
+
+.close-modal:hover {
+    background-color: #e8e8e8b8; 
+}
+
+/* עיצוב כללי לשדות טופס */
+.consultation-modal .form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.consultation-modal .form-group label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.consultation-modal .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+
