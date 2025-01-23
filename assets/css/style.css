@@ -42,15 +42,15 @@
 /* STYLING THE SEARCH BAR AND BUTTONS */
 .search-bar {
     display: flex;
-    justify-content: center; /* Centering the elements inside */
+    justify-content: center;
     align-items: center;
     padding: 8px;
-    margin: auto; /* Center the search bar */
-    width: 100%; /* Smaller width */
+    margin: auto; 
+    width: 100%; 
     background-color: #f8f9fa;
     position: sticky;
     top: 56px; 
-    z-index: 1020; 
+    z-index: 1020;
 }
 
 .form-control:focus {
@@ -101,6 +101,7 @@
 .page-link.active {
     background-color: rgb(81, 4, 4);
     border-color: rgba(50, 38, 38, 0.625);
+    z-index: 1006;
 }
 
 .form-check-input:checked {
@@ -110,6 +111,10 @@
 #navbar {
     background-color: rgba(0, 0, 0, 0.896);
     padding: 2px;
+    position: fixed; 
+    top: 0;
+    width: 100%; 
+    z-index: 1030;
 }
 
 #navbar .navbar-brand {
@@ -135,6 +140,7 @@
 .navbar-nav .nav-link:hover {
     color: #975d00;
 }
+
 
 /*  SPIN COIN FOR NAVBAR */
 .coin-icon {

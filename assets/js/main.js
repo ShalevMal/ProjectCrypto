@@ -240,10 +240,10 @@ $(document).ready(function () {
             ils: 'assets/pic/shekel.png'
         };
 
-        const clearSearchBtn = $('<button class="btn btn-secondary">Clear Search</button>').on("click", function () {
+        const clearSearchBtn = $('<button class="btn btn-secondary" style="margin-right: 5px;">Clear Search</button>').on("click", function () {
             $("#coin-search").val("").trigger("input");
         });
-
+        
         const toggleCurrencyBtn = $('<button class="btn btn-primary">Toggle Currency</button>').on("click", function () {
             const currentCurrency = $("#currency-toggle").attr("data-currency");
             const newCurrency = currentCurrency === "USD" ? "EUR" : currentCurrency === "EUR" ? "ILS" : "USD";
