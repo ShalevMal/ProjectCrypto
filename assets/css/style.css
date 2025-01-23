@@ -63,6 +63,7 @@
     padding: 8px 16px;
     border-radius: 20px;
 }
+/* test */
 
 .btn-secondary,
 .btn-primary {
@@ -80,7 +81,7 @@
 }
 
 .btn-primary:hover {
-    background-color: #080801c5;
+    background-color: #080101c5;
 }
 
 .btn-secondary {
@@ -90,6 +91,7 @@
 .btn-secondary:hover {
     background-color: #37210c9c;
 }
+
 
 .page-link {
     color: black;
@@ -164,6 +166,13 @@
     align-items: center;
 }
 
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
 .modal-content {
     max-width: 600px;
     padding: 20px;
@@ -180,6 +189,7 @@
     font-size: 20px;
     cursor: pointer;
 }
+
 
  /* SCROLLER PAGE */
 ::-webkit-scrollbar {
@@ -199,8 +209,6 @@
 #about-page {
     background-color: #121212;
     color: #cac3b0;
-    text-align: center; 
-
 }
 
 #about-page header {
@@ -210,6 +218,7 @@
 
 #about-page .section {
     padding: 60px 20px;
+    text-align: center;
 }
 
 
@@ -235,9 +244,15 @@
     background-color: #edb0156a;
 }
 
+#about-page .cta {
+    text-align: center;
+}
+
+
 ::-webkit-scrollbar-thumb {
     background: #8882739c;
     border-radius: 10px;
+    
 }
 
 /* FILL USER DETAILS */
