@@ -4,8 +4,8 @@ $(document).ready(function () {
     const LOCAL_STORAGE_KEY = "selectedCoins"; 
     const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/"; 
     const MAX_SELECTED_COINS = 5; 
-    const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
-        // const coinsURL = "coins.json"; 
+    // const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
+        const coinsURL = "coins.json"; 
     const coinsPerPage = 25; 
     let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []; 
     let currentPage = 1; 
@@ -138,7 +138,7 @@ $(document).ready(function () {
                                     <input class="form-check-input select-btn" type="checkbox" id="select-${coin.id}" data-id="${coin.id}" data-name="${coin.name}" data-symbol="${coin.symbol}" ${isSelected ? "checked" : ""}>
                                 </div>
                             </div>
-                            <button class="btn btn-primary btn-sm info-btn w-100" data-id="${coin.id}" style="margin-top: 10px,;">More Info</button>
+                            <button class="btn btn-secondary btn-sm info-btn w-100" id="MoreInfo" data-id="${coin.id}" style="margin-top: 10px,;">More Info</button>
                             <div class="coin-info mt-2" id="info-${coin.id}" style="display: none;"></div>
                         </div>
                     </div>
@@ -244,7 +244,7 @@ $(document).ready(function () {
             $("#coin-search").val("").trigger("input");
         });
         
-        const toggleCurrencyBtn = $('<button class="btn btn-primary">Toggle Currency</button>').on("click", function () {
+        const toggleCurrencyBtn = $('<button class="btn btn-secondary  "id="ToggleCurrency">Toggle Currency</button>').on("click", function () {
             const currentCurrency = $("#currency-toggle").attr("data-currency");
             const newCurrency = currentCurrency === "USD" ? "EUR" : currentCurrency === "EUR" ? "ILS" : "USD";
             $("#currency-toggle").attr("data-currency", newCurrency).html(`<img src="${currencyImages[newCurrency.toLowerCase()]}" alt="${newCurrency}" style="width: 35px; height: 35px;"><span style="display:none;">${newCurrency}</span>`);

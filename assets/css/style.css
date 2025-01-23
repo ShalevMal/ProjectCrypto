@@ -76,12 +76,19 @@
     font-size: 12px;
 }
 
+#ToggleCurrency,#MoreInfo {
+    background-color: rgb(56, 55, 55);
+}
+#ToggleCurrency:hover, #MoreInfo:hover {
+    background-color: rgb(73, 70, 70);
+}
+
 .btn-primary {
     background-color: #010100d3;
 }
 
 .btn-primary:hover {
-    background-color: #080101c5;
+    background-color: #110303c5;
 }
 
 .btn-secondary {
