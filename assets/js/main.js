@@ -234,9 +234,9 @@ $(document).ready(function () {
 
         // BUTTONS SEARCH AND TOGGLE //
         let currencyImages = {
-            usd: '/assets/pic/dollar.png',
-            eur: '/assets/pic/euro.png',
-            ils: '/assets/pic/shekel.png'
+            usd: 'assets/pic/dollar.png',
+            eur: 'assets/pic/euro.png',
+            ils: 'assets/pic/shekel.png'
         };
 
         const clearSearchBtn = $('<button class="btn btn-secondary">Clear Search</button>').on("click", function () {
