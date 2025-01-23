@@ -1,54 +1,21 @@
-html {
-    scroll-behavior: smooth;
-    text-align: center; 
-
-}
-
-body {
-    font-family: Arial, sans-serif;
-
-}
-
-#scene .base-layer,
-#scene .depth-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 #scene {
     width: 100%;
-    /* ניתן לשנות בהתאם לרוחב הרצוי */
     height: 100vh;
-    /* ניתן לשנות בהתאם לגובה הרצוי */
     overflow: hidden;
-    /* מונע גלילה נוספת מחוץ לאלמנט */
     position: relative;
-    /* הגדרת האלמנט כיחסי לשימוש בפוזיציונינג בתוכו */
 }
 
 .layer {
     width: 100%;
     height: 100%;
     position: absolute;
-    /* מאפשר חפיפה של השכבות */
-    top: 0;
-    left: 0;
 }
 
 .layer img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* מבטיח שהתמונה מרוחה על כל האלמנט תוך שמירה על יחסי הגודל */
     object-position: center;
-    /* ממרכזת את התמונה באלמנט */
 }
 
 .modal-body p {
@@ -72,42 +39,31 @@ body {
     transform: translateY(-10px);
 }
 
-#info-container img {
-    background: none;
-    /* מבטל רקע */
-    display: block;
-    margin: 0 auto;
-    /* מרכז את התמונה */
-    border: none;
-    /* מבטל מסגרת */
-    border-radius: 50%;
-}
-
-/* עיצוב השורת חיפוש והכפתורים */
+/* STYLING THE SEARCH BAR AND BUTTONS */
 .search-bar {
     display: flex;
-    justify-content: space-between;
-    /* מרווח בין האלמנטים לאורך השורה */
+    justify-content: center; /* Centering the elements inside */
     align-items: center;
-    /* מיישר את האלמנטים לאותו גובה */
-    padding: 10px;
+    padding: 8px;
+    margin: auto; /* Center the search bar */
+    width: 100%; /* Smaller width */
     background-color: #f8f9fa;
-    /* רקע בהיר לשורת חיפוש */
-    border-radius: 8px;
-    /* גבולות מעוגלים */
+    position: sticky;
+    top: 56px; 
+    z-index: 1020; 
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 .25rem rgba(197, 140, 9, 0.125);
 }
 
 #coin-search {
-    flex-grow: 1;
-    /* מאפשר לתיבת החיפוש לגדול ולהתאים לרוחב הזמין */
-    margin-right: 10px;
-    /* מרווח בין תיבת החיפוש לכפתורים */
+    width: 80%;
+    border: none;
     padding: 8px 16px;
-    border: 2px solid #ced4da;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
-/* עיצוב הכפתורים */
 .btn-secondary,
 .btn-primary {
     border: none;
@@ -115,19 +71,24 @@ body {
     font-weight: bold;
     cursor: pointer;
     border-radius: 8px;
-}
-
-.btn-secondary {
-    background-color: #37210cb5;
-    /* צבע אפור לכפתור ביטול */
     height: 45px;
     font-size: 12px;
 }
 
 .btn-primary {
     background-color: #010100d3;
-    height: 45px;
-    font-size: 12px;
+}
+
+.btn-primary:hover {
+    background-color: #080801c5;
+}
+
+.btn-secondary {
+    background-color: #543314c9;
+}
+
+.btn-secondary:hover {
+    background-color: #37210c9c;
 }
 
 .page-link {
@@ -136,32 +97,17 @@ body {
 
 .active>.page-link,
 .page-link.active {
-    z-index: 3;
-    color: var(--bs-pagination-active-color);
     background-color: rgb(81, 4, 4);
     border-color: rgba(50, 38, 38, 0.625);
-}
-
-.btn-secondary:hover {
-    background-color: #343027c2; 
 }
 
 .form-check-input:checked {
     background-color: #0f830ffc;
 }
 
-canvas {
-    margin: 0 auto;
-    display: block;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 #navbar {
     background-color: rgba(0, 0, 0, 0.896);
     padding: 2px;
-
 }
 
 #navbar .navbar-brand {
@@ -169,7 +115,6 @@ canvas {
     left: 50%;
     transform: translateX(-50%);
 }
-
 
 .nav-link.active {
     font-weight: bold;
@@ -189,18 +134,12 @@ canvas {
     color: #975d00;
 }
 
-
+/*  SPIN COIN FOR NAVBAR */
 .coin-icon {
     width: 55px;
     height: 50px;
-    animation: spin 6s linear infinite;
+    animation: spinOutward 6s linear infinite;
 }
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,215,0,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-
 
 @keyframes spinOutward {
     from {
@@ -212,12 +151,12 @@ canvas {
     }
 }
 
-.coin-icon {
-    animation: spinOutward 6s linear infinite;
+/* FOR MOBILE */
+.navbar-toggler-icon {
+    filter: hue-rotate(180deg) brightness(500%);
 }
 
-
-/*  עיצוב החלונית למשחק*/
+/* STYLING THE GAME WINDOW */
 .modal {
     width: 100%;
     height: 100%;
@@ -242,11 +181,7 @@ canvas {
     cursor: pointer;
 }
 
-/* .card-body {
-    width: 100%;
-} */
-
-/* scrollbar */
+ /* SCROLLER PAGE */
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -259,7 +194,6 @@ canvas {
 ::-webkit-scrollbar-thumb:hover {
     background: #25210586;
 }
-
 
 /* STYLE FOR ABOUT PAGE */
 #about-page {
@@ -301,21 +235,21 @@ canvas {
     background-color: #edb0156a;
 }
 
-/* מילוי פרטי משתמש */
+::-webkit-scrollbar-thumb {
+    background: #8882739c;
+    border-radius: 10px;
+}
 
-/* עיצוב כללי לחלונית */
+/* FILL USER DETAILS */
 .consultation-modal .modal-content {
     position: relative;
     width: 90%;
     max-width: 500px;
-    background-color: #fff;
     border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     text-align: left;
 }
 
-/* עיצוב כללי לכפתורים */
+/* GENERAL STYLING FOR BUTTONS */
 .consultation-modal .modal-actions {
     display: flex;
     justify-content: space-between;
@@ -356,7 +290,7 @@ canvas {
     background-color: #e8e8e8b8; 
 }
 
-/* עיצוב כללי לשדות טופס */
+/* GENERAL STYLING FOR FORM FIELDS */
 .consultation-modal .form-group {
     margin-bottom: 20px;
     position: relative;
@@ -377,5 +311,3 @@ canvas {
     outline: none;
     transition: border-color 0.2s;
 }
-
-

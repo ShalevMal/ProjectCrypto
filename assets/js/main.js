@@ -1,23 +1,22 @@
 "use strict";
 
 $(document).ready(function () {
-    const LOCAL_STORAGE_KEY = "selectedCoins"; // מפתח לאחסון המטבעות שנבחרו
-    const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/"; // API לפרטי מטבעות
-    const MAX_SELECTED_COINS = 5; // המספר המקסימלי של מטבעות שניתן לבחור
-    const coinsURL = "coins.json"; // כתובת לנתוני המטבעות המקומיים
-    const coinsPerPage = 25; // מספר המטבעות שמוצגים בכל עמוד
-    let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []; // טעינת המטבעות שנבחרו מ-LocalStorage
-    let currentPage = 1; // מספר העמוד הנוכחי
-    let coinDetailsCache = {}; // משתנה לשמירת פרטי המטבעות בזיכרון
-    let allCoins = []; // משתנה לשמירת כל המטבעות שנטענו
+    const LOCAL_STORAGE_KEY = "selectedCoins"; 
+    const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/"; 
+    const MAX_SELECTED_COINS = 5; 
+    const coinsURL = "coins.json"; 
+    const coinsPerPage = 25; 
+    let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []; 
+    let currentPage = 1; 
+    let coinDetailsCache = {}; 
+    let allCoins = []; 
     let currencySymbols = {
         usd: '$',
         eur: '€',
         ils: '₪'
     };
 
-
-    // זיהוי הדף הנוכחי
+    // INITIALIZES PAGE-SPECIFIC CONTENT  //
     const currentPagePath = window.location.pathname.split("/").pop();
     if (currentPagePath === "index.html" || currentPagePath === "") {
         initializeMainPage();
@@ -25,74 +24,75 @@ $(document).ready(function () {
         initializeLiveReportsPage();
     }
 
-         //** */ Scroll Parallax //* **/
-        window.addEventListener('scroll', function() {
-            var scrollPosition = window.pageYOffset;
-            var baseLayer = document.querySelector('.base-layer'); // התמונה הראשונה
-            var depthLayer = document.querySelector('.depth-layer'); // התמונה השניה
-        
-            var baseOffset = (scrollPosition * 0.1) % window.innerHeight; // תזוזה איטית יותר לתמונה הראשונה
-            var depthOffset = (scrollPosition * 0.3) % window.innerHeight; // תזוזה מהירה יותר לתמונה השניה
-        
-            baseLayer.style.transform = `translateY(${baseOffset}px)`;
-            depthLayer.style.transform = `translateY(${depthOffset}px)`;
-        });
-        
-        
+    //  SCROLL PARALLAX //
+    window.addEventListener('scroll', function () {
+        var scrollPosition = window.pageYOffset;
+        var baseLayer = document.querySelector('.base-layer'); 
+        var depthLayer = document.querySelector('.depth-layer');
 
-        //** */ MAIN PAGE FUNCTIONS/* **/
+        var baseOffset = (scrollPosition * 0.1) % window.innerHeight; 
+        var depthOffset = (scrollPosition * 0.3) % window.innerHeight; 
+
+        baseLayer.style.transform = `translateY(${baseOffset}px)`;
+        depthLayer.style.transform = `translateY(${depthOffset}px)`;
+    });
+
+
+
+    // MAIN PAGE FUNCTIONS //
     function initializeMainPage() {
         function fetchCoins() {
             axios.get(coinsURL)
                 .then(response => {
-                    allCoins = response.data; // שמירת כל המטבעות שנטענו
-                    renderCoins(); // הצגת המטבעות לעמוד הראשון
+                    allCoins = response.data;
+                    renderCoins();
                 })
                 .catch(error => {
                     console.error("Failed to fetch coins:", error);
                     showError("Failed to load coin data. Please check your connection.");
                 });
         }
+
+        // MORE INFO COINS //
+        async function fetchCoinDetails(coinId) {
+            const currentCurrency = $("#currency-toggle").text().toLowerCase(); // קבלת המטבע הנוכחי
+            const coinInfoContainer = $(`#info-${coinId}`);
+            coinInfoContainer.html(`
+                <div class="text-center">
+                    <img src="assets/pic/crypto-loading.png" alt="Loading..." style="width: 150px; height: 110px;">
+                </div>
+            `).slideDown();
         
-        //* */ MORE INFO COINS /* *//
-async function fetchCoinDetails(coinId) {
-    const currentCurrency = $("#currency-toggle").text().toLowerCase(); // קבלת המטבע הנוכחי
-    const coinInfoContainer = $(`#info-${coinId}`);
-    coinInfoContainer.html(`
-        <div class="text-center">
-            <img src="assets/pic/crypto-loading.png" alt="Loading..." style="width: 180px; height: 120px;">
-        </div>
-    `).slideDown();
+            try {
+                const response = await axios.get(`${COIN_DETAILS_API}${coinId}?vs_currency=${currentCurrency}`);
+                const data = response.data;
+                coinDetailsCache[coinId] = { data: data, timestamp: Date.now() };
+                renderCoinDetails(coinId, data, currentCurrency); // עדכון הנתונים לפי המטבע הנבחר
+            } catch (error) {
+                console.error("Failed to fetch coin details:", error);
+                showError("Failed to fetch coin details. Please try again.");
+            }
+        }
+        
+        
+        function renderCoinDetails(coinId, data, currency) {
+            const coinInfoContainer = $(`#info-${coinId}`);
+            const price = data.market_data.current_price[currency];
+            const marketCap = data.market_data.market_cap[currency];
+            const volume = data.market_data.total_volume[currency];
+            coinInfoContainer.html(`
+                <div class="d-flex align-items-center">
+                    <img src="${data.image.small}" alt="${data.name}" class="me-3" style="width: 40px; height: 40px;">
+                    <div>
+                        <p>Price (${currency.toUpperCase()}): ${currencySymbols[currency]}${price}</p>
+                        <p>Market Cap: ${currencySymbols[currency]}${marketCap}</p>
+                        <p>24h Volume: ${currencySymbols[currency]}${volume}</p>
+                    </div>
+                </div>
+            `).slideDown();
+        }
 
-    try {
-        const response = await axios.get(`${COIN_DETAILS_API}${coinId}?vs_currency=${currentCurrency}`);
-        const data = response.data;
-        coinDetailsCache[coinId] = { data: data, timestamp: Date.now() };
-        renderCoinDetails(coinId, data, currentCurrency); // עדכון הנתונים לפי המטבע הנבחר
-    } catch (error) {
-        console.error("Failed to fetch coin details:", error);
-        showError("Failed to fetch coin details. Please try again.");
-    }
-}
-
-
-function renderCoinDetails(coinId, data, currency) {
-    const coinInfoContainer = $(`#info-${coinId}`);
-    const price = data.market_data.current_price[currency];
-    const marketCap = data.market_data.market_cap[currency];
-    const volume = data.market_data.total_volume[currency];
-    coinInfoContainer.html(`
-        <div class="d-flex align-items-center">
-            <img src="${data.image.small}" alt="${data.name}" class="me-3" style="width: 40px; height: 40px;">
-            <div>
-                <p>Price (${currency.toUpperCase()}): ${currencySymbols[currency]}${price}</p>
-                <p>Market Cap: ${currencySymbols[currency]}${marketCap}</p>
-                <p>24h Volume: ${currencySymbols[currency]}${volume}</p>
-            </div>
-        </div>
-    `).slideDown();
-}
-
+        // FUNCTION ATTACHES EVENT LISTENERS FOR INFO AND SELECTION BUTTONS //
         function attachEventListeners() {
             $(".info-btn").on("click", function () {
                 const coinId = $(this).data("id");
@@ -112,19 +112,20 @@ function renderCoinDetails(coinId, data, currency) {
                 toggleCoinSelection({ id: coinId, name: coinName, symbol: coinSymbol }, $(this));
             });
         }
-        
 
+
+        // FUNCTION DISPLAYS AND UPDATES COIN CARDS BASED ON PAGINATION AND ATTACHES EVENT LISTENERS //
         function renderCoins() {
             const start = (currentPage - 1) * coinsPerPage;
             const end = start + coinsPerPage;
-            const coinsToRender = allCoins.slice(start, end); // חתך המטבעות לעמוד הנוכחי
-        
+            const coinsToRender = allCoins.slice(start, end);
+
             const container = $("#coins-container");
-            container.empty(); // ניקוי המטבעות הקיימים
-        
+            container.empty();
+
             coinsToRender.forEach((coin) => {
                 const isSelected = selectedCoins.some((c) => c.id === coin.id);
-        
+
                 container.append(`
                     <div class="col-md-3 mb-4">
                         <div class="card shadow position-relative">
@@ -142,16 +143,17 @@ function renderCoinDetails(coinId, data, currency) {
                     </div>
                 `);
             });
-        
-            updatePagination(); // עדכון כפתורי הפג'ינציה
-            attachEventListeners(); // חיבור מאזיני האירועים
+
+            updatePagination();
+            attachEventListeners();
         }
 
+        // SWITCHING BETWEEN CURRENCY PAGES //
         function updatePagination() {
-            const totalPages = Math.ceil(allCoins.length / coinsPerPage); // חישוב מספר העמודים הכולל
-            const paginationContainer = $("#top-pagination"); // בחר רק את האלמנט העליון
-            paginationContainer.empty(); // ניקוי הכפתורים הקיימים
-        
+            const totalPages = Math.ceil(allCoins.length / coinsPerPage);
+            const paginationContainer = $("#top-pagination");
+            paginationContainer.empty();
+
             for (let i = 1; i <= totalPages; i++) {
                 paginationContainer.append(`
                     <li class="page-item ${i === currentPage ? 'active' : ''}">
@@ -159,28 +161,27 @@ function renderCoinDetails(coinId, data, currency) {
                     </li>
                 `);
             }
-        
-            // מאזין אירועים לכפתורים
+
             $(".page-link").on("click", function () {
-                currentPage = parseInt($(this).data("page")); // עדכון מספר העמוד הנוכחי
-                renderCoins(); // רענון המטבעות
+                currentPage = parseInt($(this).data("page"));
+                renderCoins();
             });
         }
-        
 
-        // modal 5 coins //
+
+        // MODAL 5 COINS //
         function toggleCoinSelection(coin, checkbox) {
             const existingIndex = selectedCoins.findIndex((c) => c.id === coin.id);
             if (existingIndex !== -1) {
-                selectedCoins.splice(existingIndex, 1); // הסרת מטבע שנבחר
+                selectedCoins.splice(existingIndex, 1);
                 checkbox.removeClass("bg-success").addClass("bg-secondary").prop("checked", false);
             } else {
                 if (selectedCoins.length >= MAX_SELECTED_COINS) {
-                    showSelectionModal(coin); // פתיחת מודול אם נבחרו כבר 5 מטבעות
-                    checkbox.prop("checked", false); // ביטול סימון אם חורגים מהגבול
+                    showSelectionModal(coin);
+                    checkbox.prop("checked", false);
                     return;
                 }
-                selectedCoins.push(coin); // הוספת מטבע חדש
+                selectedCoins.push(coin);
                 checkbox.removeClass("bg-secondary").addClass("bg-success").prop("checked", true);
             }
 
@@ -191,10 +192,10 @@ function renderCoinDetails(coinId, data, currency) {
         function showSelectionModal(newCoin) {
             const modalElement = document.getElementById('selection-modal');
             const bsModal = new bootstrap.Modal(modalElement, {
-                backdrop: 'static',  // מונע סגירה על ידי לחיצה מחוץ למודול
+                backdrop: 'static',
             });
             bsModal.show();
-        
+
             const modalBody = $("#modal-body");
             modalBody.empty();
 
@@ -212,17 +213,17 @@ function renderCoinDetails(coinId, data, currency) {
         function attachModalListeners(newCoin) {
             $(".remove-modal-btn").on("click", function () {
                 const coinId = $(this).data("id");
-                selectedCoins = selectedCoins.filter((coin) => coin.id !== coinId); // הסרת מטבע שנבחר
-                selectedCoins.push(newCoin); // הוספת המטבע החדש
+                selectedCoins = selectedCoins.filter((coin) => coin.id !== coinId);
+                selectedCoins.push(newCoin);
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(selectedCoins));
-                $("#selection-modal").modal("hide"); // סגירת המודול
-                fetchCoins(); // רענון רשימת המטבעות
+                $("#selection-modal").modal("hide");
+                fetchCoins();
             });
         }
 
         fetchCoins();
 
-        // Search functionality
+        //  SEARCH FUNCTIONALITY // 
         $("#coin-search").on("input", function () {
             const query = $(this).val().toLowerCase();
             $(".card-title").each(function () {
@@ -231,28 +232,30 @@ function renderCoinDetails(coinId, data, currency) {
             });
         });
 
-        // Add buttons for clearing search and toggling currency display
+        // BUTTONS SEARCH AND TOGGLE //
+        let currencyImages = {
+            usd: '/assets/pic/dollar.png',
+            eur: '/assets/pic/euro.png',
+            ils: '/assets/pic/shekel.png'
+        };
+
         const clearSearchBtn = $('<button class="btn btn-secondary">Clear Search</button>').on("click", function () {
             $("#coin-search").val("").trigger("input");
         });
 
         const toggleCurrencyBtn = $('<button class="btn btn-primary">Toggle Currency</button>').on("click", function () {
-            const currentCurrency = $("#currency-toggle").text();
+            const currentCurrency = $("#currency-toggle").attr("data-currency");
             const newCurrency = currentCurrency === "USD" ? "EUR" : currentCurrency === "EUR" ? "ILS" : "USD";
-            $("#currency-toggle").text(newCurrency);
-        
-            // בדיקה אילו חלוניות "More Info" פתוחות ועדכון המידע בהן
+            $("#currency-toggle").attr("data-currency", newCurrency).html(`<img src="${currencyImages[newCurrency.toLowerCase()]}" alt="${newCurrency}" style="width: 35px; height: 35px;"><span style="display:none;">${newCurrency}</span>`);
             $(".coin-info:visible").each(function () {
-                const coinId = $(this).attr("id").replace("info-", ""); // מניח שה-id של האלמנט הוא מהצורה "info-coinId"
-                fetchCoinDetails(coinId); // טעינה מחודשת של פרטי המטבע עם המטבע החדש
+                const coinId = $(this).attr("id").replace("info-", "");
+                fetchCoinDetails(coinId, newCurrency.toLowerCase());
             });
         });
-
+        
         $(".search-bar").append(clearSearchBtn, toggleCurrencyBtn);
-        $(".search-bar").append('<span id="currency-toggle">USD</span>');
+        $(".search-bar").append(`<span id="currency-toggle" data-currency="USD"><img src="${currencyImages['usd']}" alt="USD" style="width: 35px; height: 35px;"><span style="display:none;">USD</span></span>`);
     }
-
-    
 
     /** LIVE REPORTS PAGE FUNCTIONS **/
     function initializeLiveReportsPage() {
@@ -282,7 +285,7 @@ function renderCoinDetails(coinId, data, currency) {
                     </div>
                 </div>
             `);
-            
+
             renderTradingViewChart(coin.symbol);
         });
     }
@@ -293,7 +296,7 @@ function renderCoinDetails(coinId, data, currency) {
             autosize: true,
             symbol: `${symbol.toUpperCase()}USD`,
             interval: "1",
-            timezone: "Asia/Jerusalem", 
+            timezone: "Asia/Jerusalem",
             theme: "light",
             style: "10",
             locale: "en",
@@ -313,24 +316,22 @@ function renderCoinDetails(coinId, data, currency) {
     }
 });
 
+
+//   GAME PANE //
 function openGameModal() {
     const modal = document.getElementById('game-modal');
     const iframe = document.getElementById('game-frame');
-
-    // ADDRESS GAME //
-    iframe.src = "https://lagged.com/en/g/dino-dash#goog_game_inter"; // הכנס את הכתובת האמיתית כאן
-    modal.style.display = "flex"; // הצגת החלונית
+    iframe.src = "https://lagged.com/en/g/dino-dash#goog_game_inter";
+    modal.style.display = "flex";
 }
 
 function closeGameModal() {
     const modal = document.getElementById('game-modal');
     const iframe = document.getElementById('game-frame');
-
-    modal.style.display = "none"; 
-    iframe.src = ""; 
+    modal.style.display = "none";
+    iframe.src = "";
 }
 
-// סגירת החלונית בלחיצה מחוץ לחלונית
 window.addEventListener('click', (event) => {
     const modal = document.getElementById('game-modal');
     if (event.target === modal) {
@@ -340,36 +341,42 @@ window.addEventListener('click', (event) => {
 
 
 // FIX NAVBAR FOR MOBILE //  
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const toggler = document.querySelector('.navbar-toggler');
     const logo = document.querySelector('.navbar-brand');
     const coin = document.querySelector('#coin-button');
 
-    toggler.addEventListener('click', function() {
+    toggler.addEventListener('click', function () {
         const isExpanded = toggler.getAttribute('aria-expanded') === 'true';
         logo.style.display = isExpanded ? 'none' : 'block';
         coin.style.display = isExpanded ? 'none' : 'block';
     });
 });
 
-
-// CONTANT FOR ABOUT HTML //
-// פתיחת חלונית ה-Consultation
-document.querySelector('.cta button').addEventListener('click', () => {
-    document.getElementById('consultation-modal').style.display = 'flex';
+//  CONTACT FOR ABOUT.HTML //
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname.endsWith('about.html')) {
+        setupModalInteractions();
+    }
 });
 
-// סגירת החלונית בלחיצה על Cancel
-document.querySelector('.close-modal').addEventListener('click', () => {
-    document.getElementById('consultationForm').reset(); // ניקוי שדות הטופס
-    document.getElementById('consultation-modal').style.display = 'none'; // סגירת החלונית
-});
+function setupModalInteractions() {
+    const consultationButton = document.querySelector('.cta button');
+    consultationButton?.addEventListener('click', () => {
+        document.getElementById('consultation-modal').style.display = 'flex';
+    });
 
+    const closeModalButton = document.querySelector('.close-modal');
+    closeModalButton?.addEventListener('click', () => {
+        document.getElementById('consultationForm').reset();
+        document.getElementById('consultation-modal').style.display = 'none';
+    });
 
-
-document.getElementById('consultationForm').addEventListener('submit', (e) => {
-    e.preventDefault(); 
-    alert('Form submitted successfully!');
-    e.target.reset();
-    document.getElementById('consultation-modal').style.display = 'none';
-});
+    const consultationForm = document.getElementById('consultationForm');
+    consultationForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Form submitted successfully!');
+        e.target.reset();
+        document.getElementById('consultation-modal').style.display = 'none';
+    });
+}
