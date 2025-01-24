@@ -259,10 +259,13 @@ $(document).ready(function () {
     }
 
     /** LIVE REPORTS PAGE FUNCTIONS **/
+
     function initializeLiveReportsPage() {
         if (selectedCoins.length === 0) {
-            showError("No coins selected. Please select coins on the main page.");
-            window.location.href = "index.html";
+            alert("Please select a coin to view live reports.");
+            setTimeout(() => {  
+                window.location.href = "index.html";
+            }, 1000);  
             return;
         }
 

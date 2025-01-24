@@ -148,7 +148,18 @@
     color: #975d00;
 }
 
-
+#message-container {
+    display: none;
+    color: white;
+    background-color: red;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+}
 /*  SPIN COIN FOR NAVBAR */
 .coin-icon {
     width: 55px;
