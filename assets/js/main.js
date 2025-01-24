@@ -1,16 +1,16 @@
 "use strict";
 
 $(document).ready(function () {
-    const LOCAL_STORAGE_KEY = "selectedCoins"; 
-    const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/"; 
-    const MAX_SELECTED_COINS = 5; 
+    const LOCAL_STORAGE_KEY = "selectedCoins";
+    const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/";
+    const MAX_SELECTED_COINS = 5;
     // const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
-        const coinsURL = "coins.json"; 
-    const coinsPerPage = 25; 
-    let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []; 
-    let currentPage = 1; 
-    let coinDetailsCache = {}; 
-    let allCoins = []; 
+    const coinsURL = "coins.json";
+    const coinsPerPage = 25;
+    let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+    let currentPage = 1;
+    let coinDetailsCache = {};
+    let allCoins = [];
     let currencySymbols = {
         usd: '$',
         eur: '€',
@@ -28,11 +28,11 @@ $(document).ready(function () {
     //  SCROLL PARALLAX //
     window.addEventListener('scroll', function () {
         var scrollPosition = window.pageYOffset;
-        var baseLayer = document.querySelector('.base-layer'); 
+        var baseLayer = document.querySelector('.base-layer');
         var depthLayer = document.querySelector('.depth-layer');
 
-        var baseOffset = (scrollPosition * 0.1) % window.innerHeight; 
-        var depthOffset = (scrollPosition * 0.3) % window.innerHeight; 
+        var baseOffset = (scrollPosition * 0.1) % window.innerHeight;
+        var depthOffset = (scrollPosition * 0.3) % window.innerHeight;
 
         baseLayer.style.transform = `translateY(${baseOffset}px)`;
         depthLayer.style.transform = `translateY(${depthOffset}px)`;
@@ -63,7 +63,7 @@ $(document).ready(function () {
                     <img src="assets/pic/crypto-loading.png" alt="Loading..." style="width: 150px; height: 110px;">
                 </div>
             `).slideDown();
-        
+
             try {
                 const response = await axios.get(`${COIN_DETAILS_API}${coinId}?vs_currency=${currentCurrency}`);
                 const data = response.data;
@@ -74,8 +74,8 @@ $(document).ready(function () {
                 showError("Failed to fetch coin details. Please try again.");
             }
         }
-        
-        
+
+
         function renderCoinDetails(coinId, data, currency) {
             const coinInfoContainer = $(`#info-${coinId}`);
             const price = data.market_data.current_price[currency];
@@ -85,9 +85,9 @@ $(document).ready(function () {
                 <div class="d-flex align-items-center">
                     <img src="${data.image.small}" alt="${data.name}" class="me-3" style="width: 40px; height: 40px;">
                     <div>
-                        <p>Price (${currency.toUpperCase()}): ${currencySymbols[currency]}${price}</p>
-                        <p>Market Cap: ${currencySymbols[currency]}${marketCap}</p>
-                        <p>24h Volume: ${currencySymbols[currency]}${volume}</p>
+                        <p>Price (${currency.toUpperCase()}): ${currencySymbols[currency]}${price.toLocaleString('en-US')}</p>
+                        <p>Market Cap: ${currencySymbols[currency]}${marketCap.toLocaleString('en-US')}</p>
+                        <p>24h Volume: ${currencySymbols[currency]}${volume.toLocaleString('en-US')}</p>
                     </div>
                 </div>
             `).slideDown();
@@ -169,7 +169,6 @@ $(document).ready(function () {
             });
         }
 
-
         // MODAL 5 COINS //
         function toggleCoinSelection(coin, checkbox) {
             const existingIndex = selectedCoins.findIndex((c) => c.id === coin.id);
@@ -222,6 +221,7 @@ $(document).ready(function () {
             });
         }
 
+
         fetchCoins();
 
         //  SEARCH FUNCTIONALITY // 
@@ -243,7 +243,7 @@ $(document).ready(function () {
         const clearSearchBtn = $('<button class="btn btn-secondary" style="margin-right: 5px;">Clear Search</button>').on("click", function () {
             $("#coin-search").val("").trigger("input");
         });
-        
+
         const toggleCurrencyBtn = $('<button class="btn btn-secondary  "id="ToggleCurrency">Toggle Currency</button>').on("click", function () {
             const currentCurrency = $("#currency-toggle").attr("data-currency");
             const newCurrency = currentCurrency === "USD" ? "EUR" : currentCurrency === "EUR" ? "ILS" : "USD";
@@ -253,7 +253,7 @@ $(document).ready(function () {
                 fetchCoinDetails(coinId, newCurrency.toLowerCase());
             });
         });
-        
+
         $(".search-bar").append(clearSearchBtn, toggleCurrencyBtn);
         $(".search-bar").append(`<span id="currency-toggle" data-currency="USD"><img src="${currencyImages['usd']}" alt="USD" style="width: 35px; height: 35px;"><span style="display:none;">USD</span></span>`);
     }
