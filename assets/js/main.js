@@ -4,8 +4,8 @@ $(document).ready(function () {
     const LOCAL_STORAGE_KEY = "selectedCoins";
     const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/";
     const MAX_SELECTED_COINS = 5;
-    // const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
-    const coinsURL = "coins.json";
+    const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
+    // const coinsURL = "coins.json";
     const coinsPerPage = 25;
     let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
     let currentPage = 1;
