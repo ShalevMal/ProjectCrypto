@@ -4,8 +4,8 @@ $(document).ready(function () {
     const LOCAL_STORAGE_KEY = "selectedCoins";
     const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/";
     const MAX_SELECTED_COINS = 5;
-    // const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
-    const coinsURL = "coins.json";
+    const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
+    // const coinsURL = "coins.json";
     const coinsPerPage = 25;
     let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
     let currentPage = 1;
@@ -120,31 +120,32 @@ $(document).ready(function () {
             const start = (currentPage - 1) * coinsPerPage;
             const end = start + coinsPerPage;
             const coinsToRender = allCoins.slice(start, end);
-
+        
             const container = $("#coins-container");
             container.empty();
-
+        
             coinsToRender.forEach((coin) => {
                 const isSelected = selectedCoins.some((c) => c.id === coin.id);
-
+                const marketCapChange = coin.market_cap_change_percentage_24h; // וודא שזה השדה הנכון
+        
                 container.append(`
                     <div class="col-md-3 mb-4">
                         <div class="card shadow position-relative">
                             <div class="card-body">
                                 <img src="${coin.image}" alt="${coin.name} logo" class="img-fluid mb-3" style="max-height: 60px;">
                                 <h5 class="card-title">${coin.name}</h5>
-                                <p>${coin.symbol.toUpperCase()}</p>
+                                <p class="percent-change ${marketCapChange < 0 ? 'negative' : 'positive'}">${marketCapChange.toFixed(2)}%</p>
                                 <div class="form-check form-switch position-absolute top-0 end-0 m-2">
                                     <input class="form-check-input select-btn" type="checkbox" id="select-${coin.id}" data-id="${coin.id}" data-name="${coin.name}" data-symbol="${coin.symbol}" ${isSelected ? "checked" : ""}>
                                 </div>
                             </div>
-                            <button class="btn btn-secondary btn-sm info-btn w-100" id="MoreInfo" data-id="${coin.id}" style="margin-top: 10px,;">More Info</button>
+                            <button class="btn btn-secondary btn-sm info-btn w-100" id="MoreInfo" data-id="${coin.id}" style="margin-top: 10px;">More Info</button>
                             <div class="coin-info mt-2" id="info-${coin.id}" style="display: none;"></div>
                         </div>
                     </div>
                 `);
             });
-
+        
             updatePagination();
             attachEventListeners();
         }
@@ -240,11 +241,11 @@ $(document).ready(function () {
             ils: 'assets/pic/shekel.png'
         };
 
-        const clearSearchBtn = $('<button class="btn btn-secondary" style="margin-right: 5px;">Clear Search</button>').on("click", function () {
+        const clearSearchBtn = $('<button class="btn btn-secondary";">Clear Search</button>').on("click", function () {
             $("#coin-search").val("").trigger("input");
         });
 
-        const toggleCurrencyBtn = $('<button class="btn btn-secondary  "id="ToggleCurrency">Toggle Currency</button>').on("click", function () {
+        const toggleCurrencyBtn = $('<button class="btn btn-secondary" id="ToggleCurrency">Toggle Currency</button>').on("click", function () {
             const currentCurrency = $("#currency-toggle").attr("data-currency");
             const newCurrency = currentCurrency === "USD" ? "EUR" : currentCurrency === "EUR" ? "ILS" : "USD";
             $("#currency-toggle").attr("data-currency", newCurrency).html(`<img src="${currencyImages[newCurrency.toLowerCase()]}" alt="${newCurrency}" style="width: 35px; height: 35px;"><span style="display:none;">${newCurrency}</span>`);
@@ -259,7 +260,6 @@ $(document).ready(function () {
     }
 
     /** LIVE REPORTS PAGE FUNCTIONS **/
-
     function initializeLiveReportsPage() {
         if (selectedCoins.length === 0) {
             alert("Please select a coin to view live reports.");

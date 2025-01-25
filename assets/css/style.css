@@ -1,3 +1,4 @@
+/* PARALLAX EFFECT WITH IMAGE LAYERS */
 #scene {
     width: 100%;
     height: 100vh;
@@ -18,11 +19,63 @@
     object-position: center;
 }
 
-.modal-body p {
-    display: flex;
-    justify-content: space-between;
+/* STICKY NAVBAR STYLING */
+#navbar {
+    background-color: rgba(0, 0, 0, 0.896);
+    padding: 2px;
+    position: fixed; 
+    top: 0;
+    width: 100%; 
+    z-index: 1030;
 }
 
+#navbar .navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: #ffffff !important;
+    background-color: #b394578c;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #975d00;
+}
+
+/*  SPIN COIN FOR NAVBAR */
+.coin-icon {
+    width: 55px;
+    height: 50px;
+    animation: spinOutward 6s linear infinite;
+}
+
+@keyframes spinOutward {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+/* FOR MOBILE */
+.navbar-toggler-icon {
+    filter: hue-rotate(180deg) brightness(500%);
+}
+
+/* SCROLLABLE CRYPTO CARD DESIGN */
 #coins-container {
     max-height: 500px;
     overflow-y: auto;
@@ -51,6 +104,7 @@
     position: sticky;
     top: 56px; 
     z-index: 1020;
+    gap: 6px; 
 }
 
 .form-control:focus {
@@ -58,12 +112,10 @@
 }
 
 #coin-search {
-    width: 80%;
+    width: 60%;
     border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: 10px;
 }
-/* test */
 
 .btn-secondary,
 .btn-primary {
@@ -99,7 +151,6 @@
     background-color: #37210c9c;
 }
 
-
 .page-link {
     color: black;
 }
@@ -108,79 +159,16 @@
 .page-link.active {
     background-color: rgb(81, 4, 4);
     border-color: rgba(50, 38, 38, 0.625);
-    z-index: 1006;
 }
 
 .form-check-input:checked {
     background-color: #0f830ffc;
 }
 
-#navbar {
-    background-color: rgba(0, 0, 0, 0.896);
-    padding: 2px;
-    position: fixed; 
-    top: 0;
-    width: 100%; 
-    z-index: 1030;
-}
-
-#navbar .navbar-brand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.nav-link.active {
-    font-weight: bold;
-    color: #ffffff !important;
-    background-color: #b394578c;
-    border-radius: 5px;
-    padding: 5px 10px;
-}
-
-.navbar-nav .nav-link {
-    font-size: 16px;
-    color: #fff;
-    font-weight: bold;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #975d00;
-}
-
-#message-container {
-    display: none;
-    color: white;
-    background-color: red;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1001;
-}
-/*  SPIN COIN FOR NAVBAR */
-.coin-icon {
-    width: 55px;
-    height: 50px;
-    animation: spinOutward 6s linear infinite;
-}
-
-@keyframes spinOutward {
-    from {
-        transform: rotateY(0deg);
-    }
-
-    to {
-        transform: rotateY(360deg);
-    }
-}
-
-/* FOR MOBILE */
-.navbar-toggler-icon {
-    filter: hue-rotate(180deg) brightness(500%);
-}
+.modal-body p {
+    display: flex;
+    justify-content: space-between;
+} 
 
 /* STYLING THE GAME WINDOW */
 .modal {
@@ -214,14 +202,13 @@
     cursor: pointer;
 }
 
-
  /* SCROLLER PAGE */
 ::-webkit-scrollbar {
     width: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #41310a61;
+    background: #8882739c;
     border-radius: 10px;
 }
 
@@ -272,13 +259,6 @@
     text-align: center;
 }
 
-
-::-webkit-scrollbar-thumb {
-    background: #8882739c;
-    border-radius: 10px;
-    
-}
-
 /* FILL USER DETAILS */
 .consultation-modal .modal-content {
     position: relative;
@@ -297,17 +277,9 @@
 
 .consultation-modal .modal-actions button {
     padding: 10px 20px;
-    font-size: 1rem;
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.consultation-modal .modal-actions button[type="cancel"] {
-    background-color: #32281c;
-    color: white;
-    flex: 1;
 }
 
 .consultation-modal .modal-actions button[type="submit"] {
@@ -336,7 +308,6 @@
 }
 
 .consultation-modal .form-group label {
-    font-size: 1rem;
     font-weight: bold;
     margin-bottom: 5px;
     color: #444;
@@ -347,6 +318,19 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    outline: none;
-    transition: border-color 0.2s;
+}
+
+
+
+.percent-change {
+    color: red;
+    font-size: 16px; /* Adjust size as needed */
+}
+
+.percent-change.negative {
+    color: red; /* For negative change */
+}
+
+.percent-change.positive {
+    color: green; /* For positive change, if needed */
 }
