@@ -92,6 +92,19 @@
     transform: translateY(-10px);
 }
 
+/* PERCENTAGE CHANGE DISPLAY */
+.percent-change {
+    font-size: 16px; 
+}
+
+.percent-change.negative {
+    color: red; 
+}
+
+.percent-change.positive {
+    color: green; 
+}
+
 /* STYLING THE SEARCH BAR AND BUTTONS */
 .search-bar {
     display: flex;
@@ -318,19 +331,4 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-
-
-.percent-change {
-    color: red;
-    font-size: 16px; /* Adjust size as needed */
-}
-
-.percent-change.negative {
-    color: red; /* For negative change */
-}
-
-.percent-change.positive {
-    color: green; /* For positive change, if needed */
 }
