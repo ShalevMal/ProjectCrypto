@@ -70,6 +70,20 @@
     }
 }
 
+/* ANIMATION FOR MORE INFO */
+@keyframes move-snail {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(60px); 
+    }
+}
+
+.snail-animation {
+    animation: move-snail 5s linear infinite;
+}
+
 /* FOR MOBILE */
 .navbar-toggler-icon {
     filter: hue-rotate(180deg) brightness(500%);
