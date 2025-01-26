@@ -76,7 +76,7 @@
         transform: translateX(0);
     }
     100% {
-        transform: translateX(60px); 
+        transform: translateX(35px); 
     }
 }
 
