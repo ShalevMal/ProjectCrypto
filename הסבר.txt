@@ -1,16 +1,10 @@
-עובד:
-דפדוף בין דפים
-סימוני בחירה בתצורה הרצויה
-תיבת חיפוש
-פרלקס
-שומר 5 מטבעות
-כפתורי מידע
-מעבר בין עמודי מטבעות
-תצוגה של 25 מטבעות בעמוד - 100 סהכ.
+Functional:
 
-
-המשך עבודה:
-יצירת INDEX בדף בית . 
-
-
- 
+- Page navigation
+- Checkbox selection in the desired configuration
+- Search box
+- Parallax scrolling
+- Saves 5 cryptocurrencies
+- Information buttons
+- Navigation between cryptocurrency pages
+- Displays 25 cryptocurrencies per page - 100 total
