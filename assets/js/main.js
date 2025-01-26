@@ -60,7 +60,7 @@ $(document).ready(function () {
             const coinInfoContainer = $(`#info-${coinId}`);
             coinInfoContainer.html(`
                 <div class="text-center">
-                    <img src="assets/pic/crypto-loading.png" alt="Loading..." style="width: 150px; height: 110px;">
+                    <img src="assets/pic/crypto-loading.png" alt="Loading..." class="snail-animation" style="width: 150px; height: 120px;">
                 </div>
             `).slideDown();
 
@@ -68,7 +68,7 @@ $(document).ready(function () {
                 const response = await axios.get(`${COIN_DETAILS_API}${coinId}?vs_currency=${currentCurrency}`);
                 const data = response.data;
                 coinDetailsCache[coinId] = { data: data, timestamp: Date.now() };
-                renderCoinDetails(coinId, data, currentCurrency); // עדכון הנתונים לפי המטבע הנבחר
+                renderCoinDetails(coinId, data, currentCurrency); 
             } catch (error) {
                 console.error("Failed to fetch coin details:", error);
                 showError("Failed to fetch coin details. Please try again.");
@@ -83,7 +83,7 @@ $(document).ready(function () {
             const volume = data.market_data.total_volume[currency];
             coinInfoContainer.html(`
                 <div class="d-flex align-items-center">
-                    <img src="${data.image.small}" alt="${data.name}" class="me-3" style="width: 40px; height: 40px;">
+                    <img src="${data.image.small}" alt="${data.name}" class="me-3" style="width: 40px; height: 40px; margin-left: 5px;">
                     <div>
                         <p>Price (${currency.toUpperCase()}): ${currencySymbols[currency]}${price.toLocaleString('en-US')}</p>
                         <p>Market Cap: ${currencySymbols[currency]}${marketCap.toLocaleString('en-US')}</p>
@@ -126,7 +126,7 @@ $(document).ready(function () {
         
             coinsToRender.forEach((coin) => {
                 const isSelected = selectedCoins.some((c) => c.id === coin.id);
-                const marketCapChange = coin.market_cap_change_percentage_24h; // וודא שזה השדה הנכון
+                const marketCapChange = coin.market_cap_change_percentage_24h; 
         
                 container.append(`
                     <div class="col-md-3 mb-4">
@@ -367,11 +367,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function setupModalInteractions() {
     const consultationButton = document.querySelector('.cta button');
     consultationButton?.addEventListener('click', () => {
+        document.body.style.overflow = 'hidden';
         document.getElementById('consultation-modal').style.display = 'flex';
     });
 
     const closeModalButton = document.querySelector('.close-modal');
     closeModalButton?.addEventListener('click', () => {
+        document.body.style.overflow = '';
         document.getElementById('consultationForm').reset();
         document.getElementById('consultation-modal').style.display = 'none';
     });
@@ -380,6 +382,7 @@ function setupModalInteractions() {
     consultationForm?.addEventListener('submit', (e) => {
         e.preventDefault();
         alert('Form submitted successfully!');
+        document.body.style.overflow = '';
         e.target.reset();
         document.getElementById('consultation-modal').style.display = 'none';
     });
