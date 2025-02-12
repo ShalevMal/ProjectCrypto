@@ -29,6 +29,10 @@
     z-index: 1030;
 }
 
+.navbar-brand .logo {
+    height: 70px; 
+}
+
 #navbar .navbar-brand {
     position: absolute;
     left: 50%;
@@ -117,6 +121,14 @@
 
 .percent-change.positive {
     color: green; 
+}
+
+.select-btn:hover { 
+    cursor: pointer;
+}
+
+.card-title, .percent-change:hover {
+    cursor: default
 }
 
 /* STYLING THE SEARCH BAR AND BUTTONS */
