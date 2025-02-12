@@ -1,15 +1,16 @@
 "use strict";
 
+(() => { 
+
 $(document).ready(function () {
     const LOCAL_STORAGE_KEY = "selectedCoins";
     const COIN_DETAILS_API = "https://api.coingecko.com/api/v3/coins/";
     const MAX_SELECTED_COINS = 5;
     const coinsURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
     // const coinsURL = "coins.json";
-    const coinsPerPage = 25;
+    const coinsPerPage = 20;
     let selectedCoins = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
     let currentPage = 1;
-    let coinDetailsCache = {};
     let allCoins = [];
     let currencySymbols = {
         usd: '$',
@@ -27,18 +28,16 @@ $(document).ready(function () {
 
     //  SCROLL PARALLAX //
     window.addEventListener('scroll', function () {
-        var scrollPosition = window.pageYOffset;
-        var baseLayer = document.querySelector('.base-layer');
-        var depthLayer = document.querySelector('.depth-layer');
+        let scrollPosition = window.pageYOffset;
+        let baseLayer = document.querySelector('.base-layer');
+        let depthLayer = document.querySelector('.depth-layer');
 
-        var baseOffset = (scrollPosition * 0.1) % window.innerHeight;
-        var depthOffset = (scrollPosition * 0.3) % window.innerHeight;
+        let baseOffset = (scrollPosition * 0.1) % window.innerHeight;
+        let depthOffset = (scrollPosition * 0.3) % window.innerHeight;
 
         baseLayer.style.transform = `translateY(${baseOffset}px)`;
         depthLayer.style.transform = `translateY(${depthOffset}px)`;
     });
-
-
 
     // MAIN PAGE FUNCTIONS //
     function initializeMainPage() {
@@ -56,19 +55,18 @@ $(document).ready(function () {
 
         // MORE INFO COINS //
         async function fetchCoinDetails(coinId) {
-            const currentCurrency = $("#currency-toggle").text().toLowerCase(); // קבלת המטבע הנוכחי
+            const currentCurrency = $("#currency-toggle").text().toLowerCase(); 
             const coinInfoContainer = $(`#info-${coinId}`);
             coinInfoContainer.html(`
                 <div class="text-center">
-                    <img src="assets/pic/crypto-loading.png" alt="Loading..." class="snail-animation" style="width: 150px; height: 120px;">
+                    <img src="assets/images/crypto-loading.png" alt="Loading..." class="snail-animation" style="width: 150px; height: 120px;">
                 </div>
             `).slideDown();
 
             try {
                 const response = await axios.get(`${COIN_DETAILS_API}${coinId}?vs_currency=${currentCurrency}`);
                 const data = response.data;
-                coinDetailsCache[coinId] = { data: data, timestamp: Date.now() };
-                renderCoinDetails(coinId, data, currentCurrency); 
+                renderCoinDetails(coinId, data, currentCurrency);
             } catch (error) {
                 console.error("Failed to fetch coin details:", error);
                 showError("Failed to fetch coin details. Please try again.");
@@ -109,7 +107,7 @@ $(document).ready(function () {
             $(".select-btn").on("change", function () {
                 const coinId = $(this).data("id");
                 const coinName = $(this).data("name");
-                const coinSymbol = $(this).data("symbol");
+                const coinSymbol = $(this).data("symbol");                
                 toggleCoinSelection({ id: coinId, name: coinName, symbol: coinSymbol }, $(this));
             });
         }
@@ -120,14 +118,14 @@ $(document).ready(function () {
             const start = (currentPage - 1) * coinsPerPage;
             const end = start + coinsPerPage;
             const coinsToRender = allCoins.slice(start, end);
-        
+
             const container = $("#coins-container");
             container.empty();
-        
+
             coinsToRender.forEach((coin) => {
                 const isSelected = selectedCoins.some((c) => c.id === coin.id);
-                const marketCapChange = coin.market_cap_change_percentage_24h; 
-        
+                const marketCapChange = coin.market_cap_change_percentage_24h;
+
                 container.append(`
                     <div class="col-md-3 mb-4">
                         <div class="card shadow position-relative">
@@ -145,7 +143,7 @@ $(document).ready(function () {
                     </div>
                 `);
             });
-        
+
             updatePagination();
             attachEventListeners();
         }
@@ -187,11 +185,11 @@ $(document).ready(function () {
             }
 
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(selectedCoins));
-            fetchCoins();
+            renderCoins();
         }
 
         function showSelectionModal(newCoin) {
-            const modalElement = document.getElementById('selection-modal');
+            const modalElement = $('#selection-modal');
             const bsModal = new bootstrap.Modal(modalElement, {
                 backdrop: 'static',
             });
@@ -236,9 +234,9 @@ $(document).ready(function () {
 
         // BUTTONS SEARCH AND TOGGLE //
         let currencyImages = {
-            usd: 'assets/pic/dollar.png',
-            eur: 'assets/pic/euro.png',
-            ils: 'assets/pic/shekel.png'
+            usd: 'assets/images/dollar.png',
+            eur: 'assets/images/euro.png',
+            ils: 'assets/images/shekel.png'
         };
 
         const clearSearchBtn = $('<button class="btn btn-secondary";">Clear Search</button>').on("click", function () {
@@ -263,17 +261,16 @@ $(document).ready(function () {
     function initializeLiveReportsPage() {
         if (selectedCoins.length === 0) {
             alert("Please select a coin to view live reports.");
-            setTimeout(() => {  
+            setTimeout(() => {
                 window.location.href = "index.html";
-            }, 1000);  
+            }, 1000);
             return;
         }
 
         const reportContainer = $("#reports-container");
         reportContainer.empty();
 
-        selectedCoins.forEach((coin, index) => {
-            const canvasId = `chart-${coin.symbol}`;
+        selectedCoins.forEach((coin) => {
             reportContainer.append(`
                 <div class="col-md-6 mb-4">
                     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
@@ -320,30 +317,6 @@ $(document).ready(function () {
     }
 });
 
-
-//   GAME PANE //
-function openGameModal() {
-    const modal = document.getElementById('game-modal');
-    const iframe = document.getElementById('game-frame');
-    iframe.src = "https://lagged.com/en/g/dino-dash#goog_game_inter";
-    modal.style.display = "flex";
-}
-
-function closeGameModal() {
-    const modal = document.getElementById('game-modal');
-    const iframe = document.getElementById('game-frame');
-    modal.style.display = "none";
-    iframe.src = "";
-}
-
-window.addEventListener('click', (event) => {
-    const modal = document.getElementById('game-modal');
-    if (event.target === modal) {
-        closeGameModal();
-    }
-});
-
-
 // FIX NAVBAR FOR MOBILE //  
 document.addEventListener("DOMContentLoaded", function () {
     const toggler = document.querySelector('.navbar-toggler');
@@ -358,32 +331,53 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //  CONTACT FOR ABOUT.HTML //
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function() {
     if (window.location.pathname.endsWith('about.html')) {
         setupModalInteractions();
     }
 });
 
 function setupModalInteractions() {
-    const consultationButton = document.querySelector('.cta button');
-    consultationButton?.addEventListener('click', () => {
-        document.body.style.overflow = 'hidden';
-        document.getElementById('consultation-modal').style.display = 'flex';
+    $('.cta button').on('click', function() {
+        toggleModal('flex');
     });
 
-    const closeModalButton = document.querySelector('.close-modal');
-    closeModalButton?.addEventListener('click', () => {
-        document.body.style.overflow = '';
-        document.getElementById('consultationForm').reset();
-        document.getElementById('consultation-modal').style.display = 'none';
+    $('.close-modal').on('click', function() {
+        toggleModal('none');
+        $('#consultationForm').trigger('reset');
     });
 
-    const consultationForm = document.getElementById('consultationForm');
-    consultationForm?.addEventListener('submit', (e) => {
+    $('#consultationForm').on('submit', function(e) {
         e.preventDefault();
         alert('Form submitted successfully!');
-        document.body.style.overflow = '';
-        e.target.reset();
-        document.getElementById('consultation-modal').style.display = 'none';
+        toggleModal('none');
+        $(this).trigger('reset');
     });
 }
+
+function toggleModal(displayStyle) {
+    $('body').css('overflow', displayStyle === 'flex' ? 'hidden' : '');
+    $('#consultation-modal').css('display', displayStyle);
+}
+
+})();
+
+
+// GAME PANE //
+function openGameModal() {
+    const iframe = $('#game-frame');
+    iframe.attr('src', "https://lagged.com/en/g/dino-dash#goog_game_inter");
+    $('#game-modal').css('display', 'flex');
+}
+
+function closeGameModal() {
+    const iframe = $('#game-frame');
+    iframe.attr('src', "");
+    $('#game-modal').css('display', 'none');
+}
+
+$(window).on('click', function(event) {
+    if (event.target === $('#game-modal')[0]) {
+        closeGameModal();
+    }
+});
